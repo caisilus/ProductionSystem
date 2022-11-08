@@ -8,7 +8,7 @@
         public Fact(string id, string name)
         {
             Id = id;
-            name = name;
+            Name = name;
         }
 
         // TODO change for your needs
