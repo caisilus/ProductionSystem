@@ -85,23 +85,19 @@ namespace ProductionSystem
 
         private ProductionSystem CreateProductionSystemFromLines(List<string> factsLines, List<string> rulesLines)
         {
-            List<Fact> facts = LoadFacts(factsLines); // facts should be loaded before rules
-            List<Rule> rules = LoadRules(rulesLines);
+            LoadFacts(factsLines);
+            List<Rule> rules = GetRules(rulesLines);
 
-            return new ProductionSystem(facts, rules);
+            return new ProductionSystem(rules);
         }
 
-        private List<Fact> LoadFacts(List<string> factLines)
+        private void LoadFacts(List<string> factLines)
         {
-            List<Fact> result = new List<Fact>();
             foreach (string factLine in factLines)
             {
                 Fact fact = CreateFactFromLine(factLine);
-                _idsToFacts[fact.Id] = fact; // side effect, but name contains 'load'
-                result.Add(fact);
+                _idsToFacts[fact.Id] = fact;
             }
-
-            return result;
         }
 
         private Fact CreateFactFromLine(string factLine)
@@ -113,7 +109,7 @@ namespace ProductionSystem
             return fact;
         }
         
-        private List<Rule> LoadRules(List<string> ruleLines)
+        private List<Rule> GetRules(List<string> ruleLines)
         {
             return ruleLines.Select(CreateRuleFromLine).ToList();
         }

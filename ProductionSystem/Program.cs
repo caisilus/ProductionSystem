@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProductionSystem
 {
@@ -17,6 +18,14 @@ namespace ProductionSystem
             foreach (Rule rule in ps.Rules)
             {
                 Console.WriteLine(rule);
+            }
+            // deducing
+            Fact[] startingFacts = new[] {new Fact("f1", "Твой класс Варвар")};
+            var res = ps.Deduce(startingFacts);
+            Console.WriteLine($"From starting facts {string.Join(", ", startingFacts.ToList())} deduce:");
+            foreach (Fact fact in res)
+            {
+                Console.WriteLine(fact);
             }
         }
     }
