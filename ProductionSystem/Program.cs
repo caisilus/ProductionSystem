@@ -7,8 +7,8 @@ namespace ProductionSystem
     {
         static void Main(string[] args)
         {
-            string factsFile = "../../../facts.txt";
-            string rulesFule = "../../../rules.txt";
+            string factsFile = "../../../test_facts.txt";
+            string rulesFule = "../../../test_rules.txt";
             ProductionSystemFileLoader productionSystemFileLoader = new ProductionSystemFileLoader();
             ProductionSystem ps = productionSystemFileLoader.LoadFromFiles(factsFile, rulesFule);
             foreach (Fact fact in ps.Facts)
