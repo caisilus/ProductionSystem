@@ -82,6 +82,7 @@ namespace ProductionSystem
             Queue<Fact> queue = new Queue<Fact>();
             queue.Enqueue(endFact);
             HashSet<Fact> axiomFacts = new HashSet<Fact>();
+            HashSet<Fact> visited = new HashSet<Fact>();
             while (queue.Count > 0)
             {
                 Fact fact = queue.Dequeue();
@@ -93,8 +94,11 @@ namespace ProductionSystem
                 }
                 foreach (var possibleParentFact in possibleParents)
                 {
-                    queue.Enqueue(possibleParentFact);
+                    if (!visited.Contains(possibleParentFact))
+                        queue.Enqueue(possibleParentFact);
                 }
+
+                visited.Add(fact);
             }
 
             return axiomFacts;
