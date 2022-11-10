@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace ProductionSystem
 {
@@ -74,6 +75,43 @@ namespace ProductionSystem
                     this.applicableRules.Add(rule);
                 }
             }
+        }
+
+        public IEnumerable<Fact> DeduceBack(Fact endFact)
+        {
+            Queue<Fact> queue = new Queue<Fact>();
+            queue.Enqueue(endFact);
+            HashSet<Fact> axiomFacts = new HashSet<Fact>();
+            while (queue.Count > 0)
+            {
+                Fact fact = queue.Dequeue();
+                var possibleParents = GetPossibleParents(fact);
+                if (possibleParents.Count == 0)
+                {
+                    axiomFacts.Add(fact);
+                    continue;
+                }
+                foreach (var possibleParentFact in possibleParents)
+                {
+                    queue.Enqueue(possibleParentFact);
+                }
+            }
+
+            return axiomFacts;
+        }
+
+        private List<Fact> GetPossibleParents(Fact fact)
+        {
+            List<Fact> possibleParents = new List<Fact>();
+            foreach (var rule in rules)
+            {
+                if (rule.HasConsequence(fact))
+                {
+                    possibleParents.AddRange(rule.Conditions);
+                }
+            }
+
+            return possibleParents;
         }
     }
 }

@@ -26,6 +26,11 @@ namespace ProductionSystem
             return true;
         }
 
+        public bool HasConsequence(Fact possibleConsequence)
+        {
+            return Consequences.Contains(possibleConsequence);
+        }
+        
         // TODO can be changed for your needs
         public override string ToString()
         {
